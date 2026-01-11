@@ -1,0 +1,18 @@
+<div class="gallery-container">
+    <h2>Art Gallery</h2>
+    <div class="artwork-grid">
+        @for (art of artworks; track art._id) {
+        <div class="artwork-card">
+            <img [src]="art.imageUrl" [alt]="art.title" class="artwork-image">
+            <div class="artwork-info">
+                <h3>{{ art.title }}</h3>
+                <p>By {{ art.artist }}</p>
+                <p class="price">\${{ art.price }}</p>
+                <a [routerLink]="['/art', art._id]" class="details-link">View Details</a>
+            </div>
+        </div>
+        } @empty {
+        <p>No artworks found.</p>
+        }
+    </div>
+</div>

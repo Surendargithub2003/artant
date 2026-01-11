@@ -1,0 +1,371 @@
+<!-- Parallax Background Layer -->
+<!-- Parallax Background Layer -->
+<div class="fixed inset-0 w-full h-full z-0 overflow-hidden pointer-events-none bg-gray-50/80">
+    <!-- Orb 1: Top Left (Subtle Purple) -->
+    <div class="absolute -top-[20%] -left-[10%] w-[70vw] h-[70vw] rounded-full bg-purple-100/20 blur-[120px] transition-transform duration-100 ease-linear will-change-transform"
+        [style.transform]="'translate3d(0, ' + (scrollY() * 0.2) + 'px, 0)'"></div>
+
+    <!-- Orb 2: Bottom Right (Subtle Blue) -->
+    <div class="absolute top-[40%] -right-[20%] w-[60vw] h-[60vw] rounded-full bg-blue-100/10 blur-[150px] transition-transform duration-100 ease-linear will-change-transform"
+        [style.transform]="'translate3d(0, ' + (scrollY() * -0.15) + 'px, 0)'"></div>
+
+    <!-- Orb 3: Center (Subtle Pink) -->
+    <div class="absolute bottom-[10%] left-[20%] w-[40vw] h-[40vw] rounded-full bg-pink-100/20 blur-[100px] transition-transform duration-100 ease-linear will-change-transform"
+        [style.transform]="'translate3d(0, ' + (scrollY() * 0.1) + 'px, 0)'"></div>
+</div>
+
+<div class="space-y-16 pb-24 relative z-10 overflow-hidden">
+
+    <!-- Hero Section -->
+    <div
+        class="min-h-[50vh] flex flex-col justify-center items-center text-center space-y-8 animate-fade-in pt-24 relative perspective-[1000px]">
+
+        <!-- Animated Floating Cards (New) -->
+        <!-- Animated Floating Cards (Dynamic) -->
+        @if (recentArtworks().length > 0) {
+        <div class="hidden md:block absolute top-1/4 left-[10%] animate-float-slow z-0">
+            <div class="w-48 h-64 rounded-xl overflow-hidden shadow-2xl rotate-[-6deg] opacity-90 bg-white">
+                <img [src]="recentArtworks()[0].imageUrl" class="w-full h-full object-cover"
+                    [alt]="recentArtworks()[0].title">
+            </div>
+        </div>
+        }
+        @if (recentArtworks().length > 1) {
+        <div class="hidden md:block absolute bottom-[10%] right-[10%] animate-float-medium z-0">
+            <div class="w-40 h-56 rounded-xl overflow-hidden shadow-2xl rotate-[6deg] opacity-90 bg-white p-2">
+                <img [src]="recentArtworks()[1].imageUrl" class="w-full h-full object-cover rounded-lg"
+                    [alt]="recentArtworks()[1].title">
+            </div>
+        </div>
+        }
+
+        <!-- Infinite Marquee Top -->
+        <div
+            class="w-full overflow-hidden border-b border-black/5 py-4 absolute top-6 left-0 bg-transparent backdrop-blur-[2px] z-10">
+            <!-- Flex container with double content for seamless loop -->
+            <div class="animate-marquee flex items-center whitespace-nowrap">
+                <!-- Set 1 -->
+                <div class="flex items-center space-x-12 px-6">
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Original Paintings</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Pencil Art</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Fine Art Sketches</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Portrait Drawings</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                </div>
+                <!-- Set 2 (Duplicate) -->
+                <div class="flex items-center space-x-12 px-6">
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Original Paintings</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Pencil Art</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Fine Art Sketches</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-gray-800">Portrait Drawings</span>
+                    <span class="text-xs font-bold uppercase tracking-[0.3em] text-purple-500">•</span>
+                </div>
+            </div>
+        </div>
+
+        <h1
+            class="text-7xl md:text-9xl font-serif font-regular tracking-tight leading-none bg-gradient-to-r from-purple-900 via-black to-pink-900 bg-clip-text text-transparent drop-shadow-sm mt-12 relative z-10">
+            Creative<br><span class="italic font-light text-purple-600/80">Canvas</span>
+        </h1>
+        <p
+            class="text-gray-600 font-medium text-sm tracking-[0.2em] uppercase max-w-lg mx-auto leading-loose border-t border-b border-gray-200 py-4 relative z-10 bg-white/80 backdrop-blur-sm">
+            Premium Marketplace for Original Paintings, Pencil Art & Hand-Drawn Masterpieces.
+        </p>
+    </div>
+
+    <!-- Buyer Focus Strip -->
+    <div
+        class="w-full bg-black text-white py-12 px-6 mb-16 rounded-3xl relative overflow-hidden group max-w-7xl mx-auto">
+        <div
+            class="absolute inset-0 bg-gradient-to-r from-blue-900/50 to-purple-900/50 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
+        </div>
+        <div class="relative z-10 flex flex-col md:flex-row justify-between items-center max-w-6xl mx-auto">
+            <div class="text-center md:text-left mb-6 md:mb-0">
+                <h3 class="text-2xl font-serif italic mb-2">Find the Perfect Art for Your Space</h3>
+                <p class="text-gray-400 text-xs uppercase tracking-widest leading-relaxed">Discover a curated selection
+                    of paintings, pencil sketches, and hand-drawn art.</p>
+            </div>
+            <button (click)="scrollToGallery()"
+                class="border border-white/20 hover:bg-white hover:text-black text-white px-10 py-4 rounded-full text-xs font-bold uppercase tracking-widest transition-all shadow-lg hover:shadow-white/20">
+                Browse Collection
+            </button>
+        </div>
+    </div>
+
+    <!-- Featured Artist Spotlight (New) -->
+    <div class="max-w-7xl mx-auto px-6 mb-24 relative z-10 animate-fade-in">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+
+            <!-- Artist Image / Visual -->
+            <!-- Artist Image / Visual -->
+            <div class="relative group">
+                <div
+                    class="absolute inset-0 bg-purple-200 rounded-full blur-3xl opacity-30 group-hover:opacity-50 transition-opacity duration-700 pointer-events-none">
+                </div>
+
+                <!-- Framed Image Container -->
+                <div class="relative transition-all duration-500 ease-in-out" [ngClass]="{
+                        'p-4 bg-black shadow-2xl': currentFrame() === 'black',
+                        'p-6 bg-[#5c4033] shadow-xl border-4 border-[#3e2b22]': currentFrame() === 'wood',
+                        'p-8 bg-white shadow-lg border border-gray-100': currentFrame() === 'white',
+                        'rounded-tl-[100px] rounded-br-[100px] rounded-tr-3xl rounded-bl-3xl border border-white/20 overflow-hidden': currentFrame() === 'none'
+                     }">
+
+                    <!-- Inner Mount for Frames -->
+                    <div [ngClass]="{'border-[16px] border-white': currentFrame() !== 'none'}">
+                        <img [src]="featuredArtist().image" alt="Featured Artist"
+                            class="w-full h-[500px] object-cover transition-all duration-700 ease-out transform"
+                            [class.group-hover:scale-105]="currentFrame() === 'none'">
+                    </div>
+
+                    @if(currentFrame() === 'none') {
+                    <div class="absolute bottom-0 left-0 right-0 p-8 bg-gradient-to-t from-black/80 to-transparent">
+                        <p class="text-white/80 font-serif italic text-lg">"{{ featuredArtist().quote }}"</p>
+                    </div>
+                    }
+                </div>
+
+                <!-- Frame Controls -->
+                <div class="flex justify-center gap-4 mt-8 relative z-10">
+                    <button (click)="setFrame('none')"
+                        class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all bg-gray-200 hover:bg-gray-300 text-black"
+                        [class.ring-2]="currentFrame() === 'none'" [class.ring-purple-500]="currentFrame() === 'none'">
+                        No Frame
+                    </button>
+                    <button (click)="setFrame('black')"
+                        class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all bg-black text-white hover:bg-gray-900 border border-gray-700"
+                        [class.ring-2]="currentFrame() === 'black'"
+                        [class.ring-purple-500]="currentFrame() === 'black'">
+                        Modern Black
+                    </button>
+                    <button (click)="setFrame('wood')"
+                        class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all bg-[#5c4033] text-white hover:bg-[#4a332a]"
+                        [class.ring-2]="currentFrame() === 'wood'" [class.ring-purple-500]="currentFrame() === 'wood'">
+                        Classic Wood
+                    </button>
+                    <button (click)="setFrame('white')"
+                        class="px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all bg-white text-black border border-gray-200 hover:bg-gray-50"
+                        [class.ring-2]="currentFrame() === 'white'"
+                        [class.ring-purple-500]="currentFrame() === 'white'">
+                        Gallery White
+                    </button>
+                </div>
+            </div>
+
+            <!-- Artist Info -->
+            <div class="space-y-8 text-center md:text-left">
+                <div
+                    class="inline-block px-4 py-1 border border-purple-500/30 rounded-full bg-purple-50/50 backdrop-blur-sm">
+                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-purple-700">Artist Spotlight</span>
+                </div>
+
+                <h2 class="text-5xl md:text-6xl font-serif text-gray-900 leading-tight">
+                    {{ featuredArtist().name }}
+                    <span class="block text-2xl md:text-3xl text-gray-400 font-light mt-2 italic">{{
+                        featuredArtist().title }}</span>
+                </h2>
+
+                <p class="text-gray-600 leading-relaxed text-lg font-light max-w-lg mx-auto md:mx-0">
+                    {{ featuredArtist().bio }}
+                </p>
+
+                <!-- Mini Gallery Preview -->
+                @if (featuredArtistWorks().length > 0) {
+                <div class="flex gap-4 justify-center md:justify-start pt-4">
+                    @for (work of featuredArtistWorks(); track work._id) {
+                    <div class="w-20 h-20 rounded-lg overflow-hidden border border-gray-200 hover:scale-110 transition-transform cursor-pointer shadow-sm"
+                        [routerLink]="['/art', work._id]" [title]="work.title">
+                        <img [src]="work.imageUrl" class="w-full h-full object-cover">
+                    </div>
+                    }
+                </div>
+                }
+
+                <button (click)="searchQuery.set(featuredArtist().name); scrollToGallery()"
+                    class="mt-4 px-8 py-3 bg-black text-white rounded-full text-xs font-bold uppercase tracking-widest hover:bg-gray-800 transition-colors shadow-lg hover:shadow-xl transform hover:-translate-y-0.5">
+                    View Portfolio
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Smart Search & Filter Bar -->
+    <div class="max-w-4xl mx-auto px-6 mb-8 mt-[-40px] relative z-20 animate-fade-in" style="animation-delay: 100ms;">
+        <div
+            class="bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-white/50 flex flex-col md:flex-row gap-2 items-center">
+
+            <!-- Search Input -->
+            <div class="relative w-full md:w-1/2">
+                <span class="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                    </svg>
+                </span>
+                <input type="text" [(ngModel)]="searchQuery" placeholder="Search by Artist or Title..."
+                    class="w-full pl-10 pr-4 py-3 bg-transparent rounded-full text-sm focus:outline-none placeholder:text-gray-400 font-medium">
+            </div>
+
+            <div class="w-px h-8 bg-gray-200 hidden md:block"></div>
+
+            <!-- Price Filter -->
+            <div class="relative w-full md:w-1/2 flex items-center px-4 gap-4">
+                <span class="text-xs font-bold uppercase text-gray-400 whitespace-nowrap">Max Price: ₹{{
+                    priceInput.value }}</span>
+                <input #priceInput type="range" min="0" max="50000" step="100" [value]="maxPrice()"
+                    (change)="commitPriceFilter(priceInput.value)"
+                    class="w-full accent-black h-1 bg-gray-200 rounded-lg appearance-none cursor-pointer">
+            </div>
+        </div>
+    </div>
+
+    <!-- Category Filter (Moved closer to Grid) -->
+    <div class="flex flex-wrap justify-center gap-4 animate-fade-in relative z-10 mb-8" style="animation-delay: 200ms;">
+        @for (cat of categories(); track cat) {
+        <button (click)="setCategory(cat)" [class.bg-gradient-to-r]="currentCategory() === cat"
+            [class.from-purple-600]="currentCategory() === cat" [class.to-pink-600]="currentCategory() === cat"
+            [class.text-white]="currentCategory() === cat" [class.border-transparent]="currentCategory() === cat"
+            [class.text-gray-500]="currentCategory() !== cat" [class.border-gray-200]="currentCategory() !== cat"
+            class="px-6 py-2 rounded-full text-xs font-semibold uppercase tracking-widest border transition-all duration-300 hover:scale-105 shadow-sm hover:shadow-md">
+            {{ cat }}
+        </button>
+        }
+    </div>
+
+    <!-- Gallery Grid -->
+    <!-- Changed from masonry-grid to standard Tailwind grid to fix layout -->
+    <div id="gallery-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 px-4 md:px-0 relative z-10">
+        @for (art of filteredArtworks(); track art._id) {
+        <div class="group cursor-pointer animate-slide-up" style="animation-delay: 100ms;">
+            <div [routerLink]="['/art', art._id]"
+                class="block relative transform transition-transform duration-500 hover:-translate-y-2">
+                <!-- Card Container -->
+                <div
+                    class="bg-white p-3 rounded-2xl shadow-sm hover:shadow-xl transition-shadow duration-500 transform-gpu will-change-transform">
+                    <div class="relative overflow-hidden rounded-xl bg-gray-100 aspect-auto">
+                        <!-- Removed grayscale, added gentle zoom -->
+                        <img [src]="art.imageUrl" [alt]="art.title"
+                            class="w-full h-auto object-cover transform group-hover:scale-110 transition-transform duration-1000 ease-out">
+
+                        <!-- Wishlist Button -->
+                        <button (click)="toggleWishlist($event, art)"
+                            class="absolute top-3 right-3 p-2 rounded-full bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-red-500 transition-all duration-300 z-20">
+                            <!-- Filled Heart if in Wishlist, else Outline -->
+                            @if(wishlistService.isInWishlist(art._id)) {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="text-red-500">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                </path>
+                            </svg>
+                            } @else {
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path
+                                    d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z">
+                                </path>
+                            </svg>
+                            }
+                        </button>
+
+                        <!-- Zoom Button -->
+                        <button (click)="openLightbox($event, art)"
+                            class="absolute top-3 right-12 p-2 rounded-full bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all duration-300 z-20"
+                            title="Quick View">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                        </button>
+
+                        <!-- Zoom Button -->
+                        <button (click)="openLightbox($event, art)"
+                            class="absolute top-3 right-12 p-2 rounded-full bg-white/20 backdrop-blur-md hover:bg-white text-white hover:text-black transition-all duration-300 z-20"
+                            title="Quick View">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <circle cx="11" cy="11" r="8"></circle>
+                                <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+                                <line x1="11" y1="8" x2="11" y2="14"></line>
+                                <line x1="8" y1="11" x2="14" y2="11"></line>
+                            </svg>
+                        </button>
+
+                        <!-- Overlay Action -->
+                        <div
+                            class="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center pointer-events-none">
+                            <span
+                                class="bg-white/90 backdrop-blur text-black px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transform translate-y-4 group-hover:translate-y-0 transition-transform duration-300">View
+                                Art</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 px-1 pb-1">
+                        <div class="flex justify-between items-start">
+                            <div>
+                                <h3
+                                    class="text-lg font-serif font-medium text-gray-900 group-hover:text-purple-700 transition-colors">
+                                    {{ art.title }}</h3>
+                                <p class="text-xs font-semibold text-gray-400 uppercase tracking-widest mt-1">{{
+                                    art.artist }}</p>
+                            </div>
+                            <span class="text-sm font-bold bg-gray-50 px-3 py-1 rounded-full text-gray-900">₹{{
+                                art.price }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        } @empty {
+        <div class="text-center col-span-full py-12 animate-fade-in">
+            <p class="text-gray-400 font-light italic">No artworks found in this category.</p>
+        </div>
+        }
+    </div>
+
+    <!-- Lightbox Modal -->
+    @if (selectedArtwork()) {
+    <app-lightbox [imageSrc]="selectedArtwork()!.imageUrl" [title]="selectedArtwork()!.title"
+        [subtitle]="selectedArtwork()!.artist" (close)="selectedArtwork.set(null)">
+    </app-lightbox>
+    }
+
+    <!-- Recently Viewed Section -->
+    @if (historyService.viewedArtworks().length > 0) {
+    <div class="mt-24 border-t border-black/5 pt-12 animate-fade-in">
+        <div class="flex items-center justify-between mb-8">
+            <h2 class="text-2xl font-serif font-light">Recently Viewed</h2>
+            <button (click)="historyService.clearHistory()"
+                class="text-xs uppercase tracking-widest text-red-400 hover:text-red-600">Clear</button>
+        </div>
+
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+            @for (art of historyService.viewedArtworks(); track art._id) {
+            <a [routerLink]="['/art', art._id]"
+                class="group block relative aspect-square bg-gray-100 overflow-hidden rounded-sm">
+                <img [src]="art.imageUrl"
+                    class="w-full h-full object-cover grayscale group-hover:grayscale-0 transition-all duration-500">
+                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                <div class="absolute bottom-2 left-2 text-white">
+                    <p class="text-[10px] uppercase font-bold tracking-widest">{{ art.artist }}</p>
+                </div>
+            </a>
+            }
+        </div>
+    </div>
+    }
+</div>

@@ -1,0 +1,311 @@
+<div class="space-y-8 pt-24">
+    <!-- Stats Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 animate-fade-in" style="animation-delay: 100ms;">
+        <div class="p-6 rounded-2xl bg-gradient-to-br from-gray-900 to-black text-white shadow-xl">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Total Revenue (Collected)</p>
+            <p class="text-3xl font-serif">₹{{ totalRevenue() | number }}</p>
+            <div class="mt-4 flex gap-2">
+                <span class="px-2 py-1 rounded bg-white/10 text-[10px] font-medium">+12% vs last month</span>
+            </div>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-1">Total Sales Value</p>
+            <p class="text-3xl font-serif">₹{{ totalSalesValue() | number }}</p>
+        </div>
+        <div class="p-6 rounded-2xl bg-white border border-gray-100 shadow-sm">
+            <p class="text-[10px] uppercase tracking-widest text-gray-400 mb-1">To Be Shipped (Pending)</p>
+            <p class="text-3xl font-serif">{{ pendingOrdersCount() }}</p>
+        </div>
+    </div>
+
+    <!-- Sales Analytics Chart -->
+    <div class="p-6 rounded-2xl bg-white/50 backdrop-blur-xl border border-white/60 shadow-lg animate-fade-in"
+        style="animation-delay: 150ms;">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-xl font-serif">Revenue Trends</h2>
+            <div class="text-xs font-bold uppercase tracking-widest text-gray-400">Last 6 Months</div>
+        </div>
+        <div class="w-full h-64">
+            <canvas #revenueChart></canvas>
+        </div>
+    </div>
+    <div class="relative flex flex-col md:flex-row justify-between items-end gap-6 animate-fade-in">
+        <div class="space-y-2">
+            <h1 class="text-4xl font-serif">Admin Dashboard</h1>
+            <p class="text-gray-400 text-sm">Overview of your gallery performance</p>
+        </div>
+
+        <button (click)="logout()"
+            class="absolute top-0 right-0 text-[10px] font-bold uppercase tracking-widest text-red-400 hover:text-red-600 transition-colors">
+            Logout
+        </button>
+
+        <!-- Tab Switcher -->
+        <div class="flex bg-gray-100 p-1 rounded-lg">
+            <button (click)="activeTab = 'artworks'" [class.bg-white]="activeTab === 'artworks'"
+                [class.shadow-sm]="activeTab === 'artworks'"
+                class="px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">
+                Artworks
+            </button>
+            <button (click)="activeTab = 'orders'" [class.bg-white]="activeTab === 'orders'"
+                [class.shadow-sm]="activeTab === 'orders'"
+                class="px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all">
+                Orders
+            </button>
+            <button (click)="activeTab = 'messages'" [class.bg-white]="activeTab === 'messages'"
+                [class.shadow-sm]="activeTab === 'messages'"
+                class="px-6 py-2 rounded-md text-xs font-bold uppercase tracking-widest transition-all relative">
+                Messages
+                @if (unreadMessagesCount() > 0) {
+                <span class="absolute -top-1 -right-1 w-3 h-3 bg-red-500 rounded-full border-2 border-white"></span>
+                }
+            </button>
+        </div>
+
+        @if (activeTab === 'artworks') {
+        <button (click)="addNewArtwork()"
+            class="px-6 py-3 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors">
+            Add New Artwork
+        </button>
+        } @else if (activeTab === 'orders') {
+        <button (click)="openNewOrderForm()"
+            class="px-6 py-3 bg-black text-white text-xs uppercase tracking-widest hover:bg-gray-800 transition-colors">
+            Record New Order
+        </button>
+        }
+    </div>
+
+    <!-- Artworks Tab Content -->
+    <!-- ... same as before ... -->
+
+    <!-- Orders Tab Content -->
+    <!-- ... same as before ... -->
+
+    <!-- Messages Tab Content -->
+    @if (activeTab === 'messages') {
+    <div class="overflow-hidden rounded-2xl border border-gray-100 shadow-sm bg-white/50 backdrop-blur-sm animate-fade-in"
+        style="animation-delay: 200ms;">
+        <table class="w-full text-left text-sm">
+            <thead class="bg-gray-50/50 border-b border-gray-100">
+                <tr>
+                    <th class="py-5 px-6 font-bold text-gray-400 tracking-wider uppercase text-[10px]">Date</th>
+                    <th class="py-5 px-6 font-bold text-gray-400 tracking-wider uppercase text-[10px]">From</th>
+                    <th class="py-5 px-6 font-bold text-gray-400 tracking-wider uppercase text-[10px]">Subject</th>
+                    <th class="py-5 px-6 font-bold text-gray-400 tracking-wider uppercase text-[10px]">Message</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @for (msg of messages(); track msg._id) {
+                <tr class="group hover:bg-white transition-all duration-200 cursor-pointer"
+                    [class.bg-blue-50]="!msg.isRead" (click)="markAsRead(msg)">
+                    <td class="py-4 px-6 text-gray-400 text-xs whitespace-nowrap">
+                        {{ msg.createdAt | date:'shortDate' }}
+                        @if(!msg.isRead) {
+                        <span class="inline-block w-2 h-2 bg-blue-500 rounded-full ml-2"></span>
+                        }
+                    </td>
+                    <td class="py-4 px-6 font-medium">
+                        <div class="font-serif text-base" [class.font-bold]="!msg.isRead">{{ msg.name }}</div>
+                        <div class="text-[10px] text-gray-400">{{ msg.email }}</div>
+                    </td>
+                    <td class="py-4 px-6">
+                        @if (msg.artworkTitle) {
+                        <span
+                            class="px-2 py-0.5 bg-purple-50 text-purple-700 rounded text-[10px] font-bold uppercase tracking-wider">Inquiry</span>
+                        <span class="ml-2 text-xs font-medium" [class.font-bold]="!msg.isRead">{{ msg.artworkTitle
+                            }}</span>
+                        } @else {
+                        <span
+                            class="px-2 py-0.5 bg-gray-100 text-gray-600 rounded text-[10px] font-bold uppercase tracking-wider">General</span>
+                        }
+                    </td>
+                    <td class="py-4 px-6 text-gray-600 max-w-md truncate" title="{{ msg.message }}"
+                        [class.font-bold]="!msg.isRead">
+                        {{ msg.message }}
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="4" class="py-12 text-center text-gray-400 italic">No messages received yet.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+
+    <!-- Artworks Tab Content -->
+    @if (activeTab === 'artworks') {
+    @if (showArtworkForm()) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-[60] backdrop-blur-sm animate-fade-in">
+        <div class="bg-white p-8 max-w-2xl w-full mx-4 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <app-artwork-form [artwork]="editingArtwork()" (close)="onArtworkFormClose($event)"></app-artwork-form>
+        </div>
+    </div>
+    }
+
+    <div class="overflow-x-auto animate-fade-in" style="animation-delay: 100ms;">
+        <table class="w-full text-left text-sm">
+            <thead class="border-b border-gray-100">
+                <tr>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Image</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Title</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Artist</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Price</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs text-right">
+                        Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @for (art of artworks(); track art._id) {
+                <tr class="group hover:bg-gray-50/50 transition-colors">
+                    <td class="py-4 pr-4">
+                        <img [src]="art.imageUrl"
+                            class="w-16 h-16 object-cover grayscale group-hover:grayscale-0 transition-all">
+                    </td>
+                    <td class="py-4 font-medium font-serif">{{ art.title }}</td>
+                    <td class="py-4 text-gray-500">{{ art.artist }}</td>
+                    <td class="py-4 text-gray-500">₹{{ art.price }}</td>
+                    <td class="py-4 text-right space-x-6">
+                        <button (click)="editArtwork(art)"
+                            class="text-xs text-gray-400 hover:text-black uppercase tracking-widest transition-colors">Edit</button>
+                        <button (click)="deleteArtwork(art._id)"
+                            class="text-xs text-red-300 hover:text-red-500 uppercase tracking-widest transition-colors">Delete</button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="5" class="py-12 text-center text-gray-400 italic">No artworks found.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    }
+
+    <!-- Orders Tab Content -->
+    @if (activeTab === 'orders') {
+    <div class="overflow-x-auto animate-fade-in" style="animation-delay: 100ms;">
+        <table class="w-full text-left text-sm">
+            <thead class="border-b border-gray-100">
+                <tr>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Date</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Client</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Artwork</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Total /
+                        Advance</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs">Status</th>
+                    <th class="py-4 font-medium text-gray-400 font-light tracking-wide uppercase text-xs text-right">
+                        Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                @for (order of orders(); track order._id) {
+                <tr class="group hover:bg-gray-50/50 transition-colors">
+                    <td class="py-4 text-gray-400 text-xs">{{ order.createdAt | date:'shortDate' }}</td>
+                    <td class="py-4 font-medium">
+                        <div class="font-serif">{{ order.clientName }}</div>
+                        <div class="text-xs text-gray-400">{{ order.contactInfo }}</div>
+                    </td>
+                    <td class="py-4 text-gray-500">{{ order.artworkTitle }}</td>
+                    <td class="py-4">
+                        <div class="font-medium text-black">₹{{ order.totalAmount }}</div>
+                        <div class="text-xs text-green-600 font-bold">Paid: ₹{{ order.advanceAmount }}</div>
+                    </td>
+                    <td class="py-4">
+                        <span class="px-3 py-1 text-[10px] font-bold uppercase tracking-widest rounded-full" [ngClass]="{
+                                    'bg-yellow-100 text-yellow-800': order.status === 'Pending',
+                                    'bg-blue-100 text-blue-800': order.status === 'Confirmed',
+                                    'bg-green-100 text-green-800': order.status === 'Delivered',
+                                    'bg-red-100 text-red-800': order.status === 'Cancelled'
+                                }">
+                            {{ order.status }}
+                        </span>
+                    </td>
+                    <td class="py-4 text-right space-x-6">
+                        <button (click)="editOrder(order)"
+                            class="text-xs text-gray-400 hover:text-black uppercase tracking-widest transition-colors">Edit</button>
+                        <button (click)="generateInvoice(order)"
+                            class="text-xs text-blue-400 hover:text-blue-600 uppercase tracking-widest transition-colors">Invoice</button>
+                        <button (click)="deleteOrder(order._id)"
+                            class="text-xs text-red-300 hover:text-red-500 uppercase tracking-widest transition-colors">Delete</button>
+                    </td>
+                </tr>
+                } @empty {
+                <tr>
+                    <td colspan="6" class="py-12 text-center text-gray-400 italic">No orders recorded yet.</td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Order Form Modal -->
+    @if (showOrderForm()) {
+    <div class="fixed inset-0 bg-black/50 flex justify-center items-center z-[60] backdrop-blur-sm animate-fade-in">
+        <div class="bg-white p-8 max-w-lg w-full mx-4 shadow-2xl rounded-xl">
+            <div class="flex justify-between items-center mb-6">
+                <h2 class="text-2xl font-serif">{{ editingOrder() ? 'Edit Order' : 'New Order' }}</h2>
+                <button (click)="closeOrderForm()" class="text-gray-400 hover:text-black">&times;</button>
+            </div>
+
+            <form (ngSubmit)="saveOrder()" class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs uppercase tracking-wide text-gray-500">Client Name</label>
+                        <input [(ngModel)]="newOrder.clientName" name="clientName" required
+                            class="w-full border-b py-2 focus:outline-none focus:border-black">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs uppercase tracking-wide text-gray-500">Contact Info</label>
+                        <input [(ngModel)]="newOrder.contactInfo" name="contactInfo" required
+                            class="w-full border-b py-2 focus:outline-none focus:border-black">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Artwork Title</label>
+                    <input [(ngModel)]="newOrder.artworkTitle" name="artworkTitle" required
+                        class="w-full border-b py-2 focus:outline-none focus:border-black">
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                        <label class="text-xs uppercase tracking-wide text-gray-500">Total Price (₹)</label>
+                        <input [(ngModel)]="newOrder.totalAmount" name="totalAmount" type="number" required
+                            class="w-full border-b py-2 focus:outline-none focus:border-black">
+                    </div>
+                    <div class="space-y-1">
+                        <label class="text-xs uppercase tracking-wide text-gray-500">Advance Paid (₹)</label>
+                        <input [(ngModel)]="newOrder.advanceAmount" name="advanceAmount" type="number" required
+                            class="w-full border-b py-2 focus:outline-none focus:border-black">
+                    </div>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Status</label>
+                    <select [(ngModel)]="newOrder.status" name="status"
+                        class="w-full border-b py-2 bg-transparent focus:outline-none focus:border-black">
+                        <option value="Pending">Pending</option>
+                        <option value="Confirmed">Confirmed</option>
+                        <option value="Delivered">Delivered</option>
+                        <option value="Cancelled">Cancelled</option>
+                    </select>
+                </div>
+
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Personal Notes</label>
+                    <textarea [(ngModel)]="newOrder.notes" name="notes" rows="3"
+                        class="w-full border-b py-2 focus:outline-none focus:border-black resize-none"></textarea>
+                </div>
+
+                <button type="submit"
+                    class="w-full bg-black text-white py-3 rounded-full text-xs uppercase tracking-widest mt-4 hover:bg-gray-800">
+                    Save Order
+                </button>
+            </form>
+        </div>
+    </div>
+    }
+    }
+</div>

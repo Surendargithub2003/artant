@@ -1,0 +1,92 @@
+<div class="space-y-6">
+    <div class="flex justify-between items-center border-b pb-4">
+        <h2 class="text-xl font-light">{{ artwork ? 'Edit Artwork' : 'Add New Artwork' }}</h2>
+        <button (click)="cancel()" class="text-gray-400 hover:text-black">&times;</button>
+    </div>
+
+    <form (ngSubmit)="save()" class="space-y-4">
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Title</label>
+                <input [(ngModel)]="formData.title" name="title" required
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="Untitled">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Artist</label>
+                <input [(ngModel)]="formData.artist" name="artist" required
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="Artist Name">
+            </div>
+        </div>
+
+        <div class="space-y-1">
+            <label class="text-xs uppercase tracking-wide text-gray-500">Artwork Image</label>
+            <div class="flex items-center space-x-4">
+                <input type="file" (change)="onFileSelected($event)" accept="image/*"
+                    class="text-sm text-gray-400 file:mr-4 file:py-2 file:px-4 file:rounded-none file:border-0 file:text-xs file:uppercase file:bg-gray-100 file:text-black hover:file:bg-gray-200 cursor-pointer">
+                @if (previewUrl) {
+                <img [src]="previewUrl" alt="Preview" class="h-12 w-12 object-cover border border-gray-200">
+                }
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Year</label>
+                <input [(ngModel)]="formData.year" name="year"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="2024">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Medium</label>
+                <input [(ngModel)]="formData.medium" name="medium"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="Oil on Canvas">
+            </div>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Dimensions</label>
+                <input [(ngModel)]="formData.dimensions" name="dimensions"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="24 x 36 in">
+            </div>
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Price</label>
+                <input [(ngModel)]="formData.price" name="price" type="number" required
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="0.00">
+            </div>
+        </div>
+
+        <div class="space-y-1">
+            <label class="text-xs uppercase tracking-wide text-gray-500">Category</label>
+            <input [(ngModel)]="formData.category" name="category" list="categoryOptions"
+                class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                placeholder="Photography, Painting...">
+            <datalist id="categoryOptions">
+                <option value="Painting">
+                <option value="Photography">
+                <option value="Sculpture">
+                <option value="Digital">
+                <option value="Drawing">
+            </datalist>
+        </div>
+
+        <div class="space-y-1">
+            <label class="text-xs uppercase tracking-wide text-gray-500">Description</label>
+            <textarea [(ngModel)]="formData.description" name="description" rows="3"
+                class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300 resize-none"
+                placeholder="Artwork details..."></textarea>
+        </div>
+
+        <div class="pt-4 flex justify-end space-x-4">
+            <button type="button" (click)="cancel()"
+                class="px-6 py-2 text-sm text-gray-500 hover:text-black transition-colors">Cancel</button>
+            <button type="submit" class="px-6 py-2 bg-black text-white text-sm hover:bg-gray-800 transition-colors">Save
+                Artwork</button>
+        </div>
+    </form>
+</div>

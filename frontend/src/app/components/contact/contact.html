@@ -1,0 +1,76 @@
+<div class="min-h-screen pt-32 pb-16 px-6 relative overflow-hidden">
+    <!-- Vibrant Background Orbs (Shared Style) -->
+    <div
+        class="absolute top-[20%] left-[20%] w-[300px] h-[300px] rounded-full bg-pink-100 blur-[80px] opacity-40 -z-10">
+    </div>
+    <div
+        class="absolute bottom-[-10%] right-[-5%] w-[600px] h-[600px] rounded-full bg-orange-50 blur-[100px] opacity-50 -z-10">
+    </div>
+
+    <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-16 animate-fade-in">
+        <div class="space-y-8">
+            <div class="space-y-4">
+                <h1
+                    class="text-5xl font-serif tracking-tight bg-gradient-to-r from-pink-900 to-orange-900 bg-clip-text text-transparent">
+                    Get in Touch.
+                </h1>
+                <p class="text-gray-500 font-light tracking-wide text-sm leading-relaxed">
+                    Have a question about a specific artwork? Looking for a commission? Or just want to say hello? We'd
+                    love to hear from you.
+                </p>
+            </div>
+
+            <div class="space-y-6 pt-4">
+                <div class="space-y-1">
+                    <p class="text-xs uppercase tracking-widest text-gray-400">Email</p>
+                    <a href="mailto:surendarhxiia2@gmail.com"
+                        class="text-lg font-serif hover:text-pink-700 transition-colors">surendarhxiia2@gmail.com</a>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs uppercase tracking-widest text-gray-400">Phone</p>
+                    <p class="text-lg font-serif">+91 86678 86018</p>
+                </div>
+                <div class="space-y-1">
+                    <p class="text-xs uppercase tracking-widest text-gray-400">Studio</p>
+                    <p class="text-lg font-serif">123 Creative Avenue, Design District<br>Chennai, India</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white/50 backdrop-blur-sm p-8 rounded-2xl border border-white/40 shadow-sm">
+            <form (ngSubmit)="submitForm()" class="space-y-6">
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Name</label>
+                    <input type="text" [(ngModel)]="formData.name" name="name" required
+                        class="w-full bg-white/80 border-b border-gray-200 py-2 focus:outline-none focus:border-pink-500 transition-colors placeholder-gray-300">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Email</label>
+                    <input type="email" [(ngModel)]="formData.email" name="email" required
+                        class="w-full bg-white/80 border-b border-gray-200 py-2 focus:outline-none focus:border-pink-500 transition-colors placeholder-gray-300">
+                </div>
+                <div class="space-y-1">
+                    <label class="text-xs uppercase tracking-wide text-gray-500">Message</label>
+                    <textarea rows="4" [(ngModel)]="formData.message" name="message" required
+                        class="w-full bg-white/80 border-b border-gray-200 py-2 focus:outline-none focus:border-pink-500 transition-colors placeholder-gray-300 resize-none"></textarea>
+                </div>
+                <button type="submit" [disabled]="isSending"
+                    class="w-full bg-gradient-to-r from-gray-900 to-black text-white py-3 rounded-full text-xs uppercase tracking-widest hover:shadow-lg transform active:scale-95 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    {{ isSending ? 'Sending...' : 'Send Message' }}
+                </button>
+            </form>
+
+            <div class="mt-8 pt-8 border-t border-gray-100/50 text-center">
+                <p class="text-xs text-gray-400 mb-4 uppercase tracking-widest">Or chat with us directly</p>
+                <button (click)="openWhatsApp()"
+                    class="inline-flex items-center gap-2 px-6 py-3 bg-green-50 text-green-700 rounded-full text-xs font-bold uppercase tracking-widest hover:bg-green-100 transition-colors">
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                        <path
+                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.001.54 1.655.712 2.806.712 3.18 0 5.767-2.587 5.767-5.766.001-3.181-2.585-5.767-5.767-5.767zm.796 5.819c-.318.156-1.892.898-2.185.998-.292.102-.505.152-.718.152-.212 0-.424-.055-.632-.165-.21-.11-.475-.24-.768-.51-.377-.348-.813-.884-1.127-1.428-.158-.275.145-.42.368-.646.19-.192.316-.328.462-0.627.147-.3.076-.566-.035-.794-.112-.228-1-2.42-1.378-3.26-.367-.818-.737-.698-1.01-.71l-.433-.016c-.365-.015-1.29 0-1.748.498-.458.498-1.2 1.172-1.2 2.859 0 1.687 1.229 3.32 1.398 3.553.17.234 2.404 3.737 5.869 5.215 2.054.876 2.87 0.702 3.368.654.498-.048 1.583-.646 1.808-1.27.224-.624.224-1.157.158-1.27-.065-.112-.24-.179-.504-.31z" />
+                    </svg>
+                    WhatsApp Support
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

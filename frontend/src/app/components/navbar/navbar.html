@@ -1,0 +1,88 @@
+<nav
+        class="fixed top-0 left-0 right-0 z-50 flex justify-between items-center py-5 px-8 bg-white/90 backdrop-blur-xl transition-all duration-300">
+
+        <!-- Gradient Bottom Border -->
+        <div
+                class="absolute bottom-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-gray-200 to-transparent">
+        </div>
+
+        <!-- Logo -->
+        <div class="logo relative group flex items-center space-x-2">
+                <!-- Abstract Brand Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"
+                        class="text-black group-hover:text-purple-600 transition-colors duration-300">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2"
+                                stroke-linecap="round" stroke-linejoin="round" />
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" />
+                </svg>
+                <a routerLink="/"
+                        class="text-3xl font-serif font-medium tracking-tighter bg-gradient-to-r from-black to-gray-700 bg-clip-text text-transparent hover:opacity-80 transition-opacity">
+                        ArtMarket<span class="text-purple-600">.</span>
+                </a>
+        </div>
+
+        <!-- Center Navigation -->
+        <ul class="hidden md:flex space-x-10">
+                <li class="relative group">
+                        <a routerLink="/" fragment="gallery-grid" routerLinkActive="text-black"
+                                [routerLinkActiveOptions]="{exact: true}"
+                                class="text-xs font-semibold text-gray-500 hover:text-black tracking-[0.2em] uppercase transition-colors py-2 block">
+                                Collection
+                        </a>
+                        <span
+                                class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
+                </li>
+                <li class="relative group">
+                        <a routerLink="/about" routerLinkActive="text-black"
+                                class="text-xs font-semibold text-gray-500 hover:text-black tracking-[0.2em] uppercase transition-colors py-2 block">
+                                About
+                        </a>
+                        <span
+                                class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
+                </li>
+                <li class="relative group">
+                        <a routerLink="/contact" routerLinkActive="text-black"
+                                class="text-xs font-semibold text-gray-500 hover:text-black tracking-[0.2em] uppercase transition-colors py-2 block">
+                                Contact
+                        </a>
+                        <span
+                                class="absolute bottom-0 left-0 w-0 h-[2px] bg-gradient-to-r from-purple-500 to-pink-500 transition-all duration-300 group-hover:w-full"></span>
+                </li>
+        </ul>
+
+        <!-- Right Actions (Removed) -->
+        <!-- <div class="flex items-center space-x-6"></div> -->
+        <!-- Hamburger Button (Mobile) -->
+        <button (click)="toggleMobileMenu()"
+                class="md:hidden z-50 relative group w-10 h-10 flex items-center justify-center">
+                <div
+                        class="flex flex-col justify-between w-6 h-5 transform transition-all duration-300 origin-center overflow-hidden">
+                        <div class="bg-black h-[2px] w-7 transform transition-all duration-300 origin-left"
+                                [class.rotate-[42deg]]="isMobileMenuOpen" [class.w-full]="isMobileMenuOpen"></div>
+                        <div class="bg-black h-[2px] w-7 rounded transform transition-all duration-300"
+                                [class.opacity-0]="isMobileMenuOpen"></div>
+                        <div class="bg-black h-[2px] w-7 transform transition-all duration-300 origin-left"
+                                [class.-rotate-[42deg]]="isMobileMenuOpen" [class.w-full]="isMobileMenuOpen"></div>
+                </div>
+        </button>
+</nav>
+
+<!-- Mobile Menu Overlay -->
+@if (isMobileMenuOpen) {
+<div class="fixed inset-0 bg-white z-40 flex flex-col justify-center items-center space-y-8 animate-fade-in md:hidden">
+        <!-- Close button handled by hamburger z-index -->
+
+        <a routerLink="/" (click)="toggleMobileMenu()"
+                class="text-3xl font-serif font-medium tracking-tight hover:text-purple-600 transition-colors">Collection</a>
+        <a routerLink="/about" (click)="toggleMobileMenu()"
+                class="text-3xl font-serif font-medium tracking-tight hover:text-purple-600 transition-colors">About</a>
+        <a routerLink="/contact" (click)="toggleMobileMenu()"
+                class="text-3xl font-serif font-medium tracking-tight hover:text-purple-600 transition-colors">Contact</a>
+        <div class="w-12 h-[1px] bg-gray-200"></div>
+        <a routerLink="/admin" (click)="toggleMobileMenu()"
+                class="text-sm font-bold uppercase tracking-widest text-gray-400 hover:text-black">Artist Portal</a>
+</div>
+}

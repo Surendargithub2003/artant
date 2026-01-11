@@ -1,0 +1,245 @@
+@if (artwork(); as art) {
+<!-- Immersive Background Layer -->
+<div class="fixed inset-0 w-full h-full -z-10 overflow-hidden pointer-events-none">
+    <img [src]="art.imageUrl" class="w-full h-full object-cover blur-[100px] opacity-30 scale-125 transform" alt="">
+    <div class="absolute inset-0 bg-white/40"></div>
+</div>
+
+<div class="min-h-screen pt-32 pb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-24 items-center relative z-10">
+
+    <!-- Left Column: Artwork Showcase -->
+    <div class="lg:col-span-7 relative group perspective-[1000px]">
+        <!-- Back Button -->
+        <a routerLink="/"
+            class="absolute -top-16 left-0 text-xs font-bold uppercase tracking-[0.2em] text-gray-500 hover:text-black transition-colors flex items-center space-x-2 group/back">
+            <span class="transform group-hover/back:-translate-x-1 transition-transform">&larr;</span>
+            <span>Back to Collection</span>
+        </a>
+
+        <div class="relative z-10 p-4 md:p-8 flex flex-col items-center">
+            <!-- Framed Image Container -->
+            <!-- Using strict CSS classes for robust switching -->
+            <div #imgContainer class="relative w-fit mx-auto frame-container group-hover:rotate-0" [ngClass]="{
+                    'frame-black': currentFrame() === 'black',
+                    'frame-wood': currentFrame() === 'wood',
+                    'frame-white': currentFrame() === 'white',
+                    'frame-none': currentFrame() === 'none'
+                 }">
+
+                <!-- Inner Mount -->
+                <div class="mount-base" [ngClass]="{
+                        'mount-white': currentFrame() === 'black' || currentFrame() === 'white',
+                        'mount-wood': currentFrame() === 'wood',
+                        'mount-none': currentFrame() === 'none'
+                      }">
+                    <!-- Artwork -->
+                    <img [src]="art.imageUrl" [alt]="art.title"
+                        class="max-w-full max-h-[65vh] h-auto w-auto min-w-[280px] md:min-w-[500px] object-contain bg-gray-50"
+                        [class.shadow-inner]="currentFrame() === 'none'">
+                </div>
+
+                <!-- Glass Reflection for Framed Art -->
+                @if(currentFrame() !== 'none') {
+                <div
+                    class="absolute inset-0 bg-gradient-to-tr from-white/0 via-white/5 to-white/0 pointer-events-none mix-blend-overlay !transition-none">
+                </div>
+                }
+            </div>
+
+            <!-- Frame Controls -->
+            <div
+                class="flex justify-center gap-3 mt-8 bg-white/80 backdrop-blur-md p-2 rounded-full shadow-lg border border-white/40">
+                <button (click)="setFrame('none')"
+                    class="px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-gray-100 text-black border border-transparent"
+                    [class.bg-black]="currentFrame() === 'none'" [class.text-white]="currentFrame() === 'none'"
+                    [class.hover:bg-gray-800]="currentFrame() === 'none'">
+                    None
+                </button>
+                <button (click)="setFrame('black')"
+                    class="px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-gray-100 text-black border border-transparent"
+                    [class.bg-black]="currentFrame() === 'black'" [class.text-white]="currentFrame() === 'black'"
+                    [class.hover:bg-gray-800]="currentFrame() === 'black'">
+                    Black
+                </button>
+                <button (click)="setFrame('wood')"
+                    class="px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-gray-100 text-black border border-transparent"
+                    [class.bg-[#5c4033]]="currentFrame() === 'wood'" [class.text-white]="currentFrame() === 'wood'"
+                    [class.hover:bg-[#4a332a]]="currentFrame() === 'wood'">
+                    Wood
+                </button>
+                <button (click)="setFrame('white')"
+                    class="px-4 py-2 rounded-full text-[10px] font-bold uppercase tracking-widest transition-all hover:bg-gray-100 text-black border border-gray-200"
+                    [class.bg-gray-200]="currentFrame() === 'white'" [class.text-black]="currentFrame() === 'white'"
+                    [class.hover:bg-gray-300]="currentFrame() === 'white'">
+                    White
+                </button>
+            </div>
+
+            <!-- Floating Shadow (adjusted) -->
+            <div class="absolute bottom-16 left-[10%] w-[80%] h-12 bg-black/20 blur-3xl rounded-full opacity-40 mix-blend-multiply -z-10 transition-all duration-500"
+                [class.opacity-0]="currentFrame() !== 'none'"></div>
+        </div>
+    </div>
+
+    <!-- Right Column: Details -->
+    <div class="lg:col-span-5 space-y-10 glass-panel p-8 md:p-12 rounded-3xl animate-fade-in">
+
+        <div class="space-y-4 border-b border-black/5 pb-8">
+            <span
+                class="inline-block px-3 py-1 rounded-full border border-black/10 text-[10px] font-bold uppercase tracking-widest bg-white/50 text-gray-600 mb-2">
+                {{ art.category || 'Fine Art' }}
+            </span>
+            <h1 class="text-5xl md:text-6xl font-serif font-medium leading-tight text-gray-900 drop-shadow-sm">{{
+                art.title }}</h1>
+            <p class="text-xl text-gray-500 font-serif italic">by {{ art.artist }}</p>
+        </div>
+
+        <div class="text-base font-light text-gray-700 leading-relaxed space-y-4">
+            <p>{{ art.description }}</p>
+        </div>
+
+        <div class="grid grid-cols-2 gap-y-6 text-xs uppercase tracking-widest border-b border-black/5 pb-8">
+            <div>
+                <span class="text-gray-400 block mb-1">Year</span>
+                <span class="font-bold text-gray-900">{{ art.year }}</span>
+            </div>
+            <div>
+                <span class="text-gray-400 block mb-1">Medium</span>
+                <span class="font-bold text-gray-900">{{ art.medium }}</span>
+            </div>
+            <div>
+                <span class="text-gray-400 block mb-1">Dimensions</span>
+                <span class="font-bold text-gray-900">{{ art.dimensions }}</span>
+            </div>
+            <div>
+                <span class="text-gray-400 block mb-1">Authenticity</span>
+                <span class="font-bold text-gray-900">Signed Original</span>
+            </div>
+        </div>
+
+        <div class="flex items-center justify-between pt-4">
+            <div class="flex flex-col">
+                <span class="text-xs text-gray-400 uppercase tracking-widest mb-1">Price</span>
+                <span class="text-4xl font-serif text-gray-900">₹{{ art.price }}</span>
+            </div>
+
+            @if (art.available) {
+            <div class="flex gap-4">
+                <button (click)="inquire()"
+                    class="flex-1 bg-black text-white px-6 py-4 text-xs font-bold hover:bg-green-900 hover:scale-105 transition-all duration-300 uppercase tracking-[0.2em] rounded-full shadow-lg hover:shadow-green-900/20 flex items-center justify-center gap-3">
+                    <span>WhatsApp</span>
+                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.711 2.592 2.654-.696c1.001.54 1.655.712 2.806.712 3.18 0 5.767-2.587 5.767-5.767.001-3.181-2.585-5.767-5.767-5.767zm.796 5.819c-.318.156-1.892.898-2.185.998-.292.102-.505.152-.718.152-.212 0-.424-.055-.632-.165-.21-.11-.475-.24-.768-.51-.377-.348-.813-.884-1.127-1.428-.158-.275.145-.42.368-.646.19-.192.316-.328.462-0.627.147-.3.076-.566-.035-.794-.112-.228-1-2.42-1.378-3.26-.367-.818-.737-.698-1.01-.71l-.433-.016c-.365-.015-1.29 0-1.748.498-.458.498-1.2 1.172-1.2 2.859 0 1.687 1.229 3.32 1.398 3.553.17.234 2.404 3.737 5.869 5.215 2.054.876 2.87 0.702 3.368.654.498-.048 1.583-.646 1.808-1.27.224-.624.224-1.157.158-1.27-.065-.112-.24-.179-.504-.31z" />
+                    </svg>
+                </button>
+                <button (click)="openEmailModal()"
+                    class="flex-1 bg-white border border-gray-200 text-black px-6 py-4 text-xs font-bold hover:bg-gray-50 hover:scale-105 transition-all duration-300 uppercase tracking-[0.2em] rounded-full shadow-lg hover:shadow-gray-200/50 flex items-center justify-center gap-3">
+                    <span>Email</span>
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                        </path>
+                    </svg>
+                </button>
+
+                <!-- Share Button -->
+                <button (click)="shareArtwork()" title="Share this Artwork"
+                    class="w-14 bg-white border border-gray-200 text-black px-0 py-4 text-xs font-bold hover:bg-gray-50 hover:scale-105 transition-all duration-300 rounded-full shadow-lg hover:shadow-gray-200/50 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="18" cy="5" r="3"></circle>
+                        <circle cx="6" cy="12" r="3"></circle>
+                        <circle cx="18" cy="19" r="3"></circle>
+                        <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                        <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                    </svg>
+                </button>
+            </div>
+            } @else {
+            <span
+                class="bg-gray-100 text-gray-400 px-8 py-3 text-xs font-bold uppercase tracking-widest rounded-full cursor-not-allowed">
+                Sold Out
+            </span>
+            }
+        </div>
+    </div>
+</div>
+
+
+<!-- Related Artworks Section -->
+@if (relatedArtworks().length > 0) {
+<div class="py-24 border-t border-black/5 animate-fade-in delay-200">
+    <h2 class="text-3xl font-serif font-light text-center mb-16">You May Also Like</h2>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12 w-full">
+        @for (item of relatedArtworks(); track item._id) {
+        <a [routerLink]="['/art', item._id]" class="group block space-y-4">
+            <div class="relative aspect-[4/5] bg-gray-100 overflow-hidden rounded-sm">
+                <img [src]="item.imageUrl" [alt]="item.title"
+                    class="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700 ease-in-out">
+
+                <!-- Overlay -->
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-500"></div>
+            </div>
+
+            <div class="text-center space-y-2">
+                <h3 class="font-serif text-lg group-hover:text-purple-900 transition-colors">{{ item.title }}</h3>
+                <p class="text-xs uppercase tracking-widest text-gray-500">{{ item.artist }}</p>
+                <p class="text-sm font-bold">₹{{ item.price }}</p>
+            </div>
+        </a>
+        }
+    </div>
+</div>
+}
+
+<!-- Email Inquiry Modal -->
+@if (showEmailModal()) {
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4">
+    <!-- Backdrop -->
+    <div class="absolute inset-0 bg-black/60 backdrop-blur-sm" (click)="closeEmailModal()"></div>
+
+    <!-- Modal Content -->
+    <div class="relative bg-white rounded-2xl shadow-2xl p-8 max-w-lg w-full animate-fade-in group">
+        <button (click)="closeEmailModal()"
+            class="absolute top-4 right-4 text-gray-400 hover:text-black transition-colors">&times;</button>
+
+        <h3 class="text-2xl font-serif mb-6">Inquire via Email</h3>
+
+        <form (ngSubmit)="submitInquiry()" class="space-y-4">
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Your Name</label>
+                <input [(ngModel)]="inquiryForm.name" name="name" required
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="John Doe">
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Your Email</label>
+                <input [(ngModel)]="inquiryForm.email" name="email" type="email" required
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300"
+                    placeholder="john@example.com">
+            </div>
+
+            <div class="space-y-1">
+                <label class="text-xs uppercase tracking-wide text-gray-500">Message</label>
+                <textarea [(ngModel)]="inquiryForm.message" name="message" required rows="4"
+                    class="w-full border-b border-gray-300 py-2 focus:outline-none focus:border-black transition-colors placeholder-gray-300 resize-none"></textarea>
+            </div>
+
+            <button type="submit" [disabled]="isSending()"
+                class="w-full bg-black text-white py-3 rounded-full text-xs uppercase tracking-widest hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-4">
+                {{ isSending() ? 'Sending...' : 'Send Message' }}
+            </button>
+        </form>
+    </div>
+</div>
+}
+
+} @else {
+<div class="min-h-screen flex flex-col justify-center items-center gap-4">
+    <div class="w-16 h-16 border-4 border-gray-100 border-t-black rounded-full animate-spin"></div>
+    <p class="text-xs uppercase tracking-widest text-gray-400 animate-pulse">Loading Masterpiece...</p>
+</div>
+}

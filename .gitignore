@@ -1,0 +1,9 @@
+backend/.env
+frontend/.env
+backend/Dockerfile
+frontend/Dockerfile
+backend/nginx.conf
+backend/docker-compose.yml
+frontend/docker-compose.yml
+backend/node_modules
+frontend/node_modules
